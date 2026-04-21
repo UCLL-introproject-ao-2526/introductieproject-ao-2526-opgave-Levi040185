@@ -1,0 +1,3 @@
+Schrijffoutje: search/which-language/slay-the-spire/description.md
+--> In which programming language is Balatro written?  
+--> "Balatro" is in Lua geschreven, dit geeft geen correcte pytest.  "Slay The Spire" is in Java geschreven, dit geeft wel een groen vinkje. 
