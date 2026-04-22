@@ -25,6 +25,7 @@ initial_deal = False
 my_hand = []
 dealer_hand = []
 outcome = 0
+reveal_dealer = False
 
 # deal cards by selecting randomly from deck, and make function for one card at a time
 def deal_cards(current_hand, current_deck):
@@ -33,6 +34,25 @@ def deal_cards(current_hand, current_deck):
     current_deck.pop(card-1)
     print(current_hand, current_deck)
     return current_hand, current_deck
+
+#draw cards visually on the screen
+def draw_cards(player, dealer, reveal):
+    for i in range(len(player)):
+        pygame.draw.rect(screen, 'white', [70 + (70 * i), 460 + (5 * i), 120, 220], 0, 5)
+        screen.blit(font.render(player[i], True, 'black'), (75 + 70*i, 465 + 5*i))
+        screen.blit(font.render(player[i], True, 'black'), (75 + 70*i, 635 + 5*i))
+        pygame.draw.rect(screen, 'red', [70 + (70 * i), 460 + (5 * i), 120, 220], 5, 5)
+    
+    #if player hasn't finished turn, dealer will hide one card
+    for i in range(len(dealer)):
+        pygame.draw.rect(screen, 'white', [70 + (70 * i), 160 + (5 * i), 120, 220], 0, 5)
+        if i != 0 or reveal:
+            screen.blit(font.render(dealer[i], True, 'black'), (75 + 70*i, 165 + 5*i))
+            screen.blit(font.render(dealer[i], True, 'black'), (75 + 70*i, 335 + 5*i))
+        else:
+            screen.blit(font.render('???', True, 'black'), (75 + 70*i, 165 + 5*i))
+            screen.blit(font.render('???', True, 'black'), (75 + 70*i, 335 + 5*i))
+        pygame.draw.rect(screen, 'blue', [70 + (70 * i), 160 + (5 * i), 120, 220], 5, 5)
 
 #draw game conditions and buttons
 def draw_game(act):
@@ -79,6 +99,8 @@ while run:
 
 
     #once game is activated, and dealt, calculate scores and display cards
+    if active:
+        draw_cards(my_hand, dealer_hand, reveal_dealer)
     buttons = draw_game(active)
 
     # event handling, if quit pressed, then exit game
